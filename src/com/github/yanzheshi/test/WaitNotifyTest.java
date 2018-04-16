@@ -2,6 +2,10 @@ package com.github.yanzheshi.test;
 
 /**
  * Created by shiyanzhe on 2016/11/22.
+ * wait 会导致当前线程放弃锁，暂停当前线程， 等待其他线程的唤醒（notify/notifyAll）
+ * notify只能随机唤醒一个等待（wait）的线程，同时并不影响本线程的执行，也没有放弃锁
+ * notifyAll可能唤醒所有等待的线程，同时不影响本线程的执行，也没有放弃锁
+ *
  */
 public class WaitNotifyTest {
     public static void main(String[] args) {
@@ -15,8 +19,13 @@ public class WaitNotifyTest {
         thread4.setName("t4");
         thread4.setShareObjcet(shareObject);
 
+        MyThread3 thread5 = new MyThread3();
+        thread5.setName("t5");
+        thread5.setShareObjcet(shareObject);
+
         thread3.start();
         thread4.start();
+        thread5.start();
     }
 }
 
@@ -67,7 +76,7 @@ class MyThread4 extends Thread {
 
                 if (i == 10) {
                     System.out.println("notify");
-                    shareObjcet.notify();
+                    shareObjcet.notifyAll();
                 }
 
                 System.out.println(getName() + ": " + i);

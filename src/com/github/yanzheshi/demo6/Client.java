@@ -1,24 +1,26 @@
-package com.github.yanzheshi.demo3;
+package com.github.yanzheshi.demo6;
 
 import java.util.Scanner;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * 生产者消费者模拟
- * 与demo2相比, 换了一种同步形式--没有使用wait和notifyAll
- * 而是利用简单的判断去实现:
- * 当仓库不满就生产
- * 当仓库不空就消费
- * 能成功实现，但是性能可能比前两个低。
- * 因为即使判断到仓库为空，消费者可能还会继续判断。
- * 生产者也同样如何， 多了很多无谓的判断
+ * 与test4相比, 自己实现了BlockingQueue，
+ * 使用新的并发框架来实现
+ * Lock，Condition机制
+ * Condition提供了更细粒度的唤醒和等待。
+ * 唤醒指定条件下等待的线程。
  *
+ * 输出由仓库完成
+ * 解决了生产和消费执行后不能立即打印信息的问题
  * Created by shiyanzhe on 2016/11/21.
  */
 public class Client {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         //公用一个仓库
-        int proNum,  conNum, storeSize;
+        int proNum, conNum, storeSize;
 
         System.out.println("仓库容量");
         storeSize = scanner.nextInt();
@@ -30,16 +32,16 @@ public class Client {
         scanner.close();
 
         StoreHouse storeHouse = new StoreHouse(storeSize);
+        Executor executor = Executors.newFixedThreadPool(conNum + proNum);
 
         for (int i = 0; i < proNum; i++) {
             Producer producer = new Producer("p" + i, storeHouse);
-            producer.start();
+            executor.execute(producer);
         }
 
         for (int i = 0; i < conNum; i++) {
             Consumer consumer = new Consumer("c" + i, storeHouse);
-            consumer.start();
+            executor.execute(consumer);
         }
-
     }
 }

@@ -58,7 +58,7 @@ public class SynchronizedTest {
 //        myThread4.start();
 //        myThread5.start();
 
-        MyThread55 myThread6 = new MyThread55();
+/*        MyThread55 myThread6 = new MyThread55();
         myThread6.setName("t6");
         myThread6.setMyThread44(myThread4);
         MyThread55 myThread7 = new MyThread55();
@@ -68,7 +68,7 @@ public class SynchronizedTest {
 
 
         myThread6.start();
-        myThread7.start();
+        myThread7.start();*/
 
 
 
@@ -89,12 +89,12 @@ class MyThread1 extends Thread{
     @Override
     public void run() {
         //1. 使用非共享的对象作为锁对象
-        //synchronized (object){
+//        synchronized (object){
         //2. 使用类共享的对象作为锁对象
-        //synchronized (getClass()) {
+        synchronized (getClass()) {
         //synchronized (staticObject){
             //3. 使用所有线程共享的对象作为锁对象
-            synchronized (shareObjcet){
+//            synchronized (shareObjcet){
             for (int i = 0; i < 20; i++) {
                 try {
                     sleep(100);

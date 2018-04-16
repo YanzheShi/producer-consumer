@@ -27,14 +27,15 @@ public class Consumer extends Thread{
      */
     public void consume() {
         //模拟消费过程,让线程等待一下在继续执行,并没有放弃锁,所以sleep期间不会有其他线程执行
+        //方便观察执行情况， 对程序没任何影响
         try {
             System.out.println(name  + "sleep");
-            sleep(100);
+            sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        //同一时刻只能有一件商品被消费
+        //掌握着仓库的锁，同一时刻只能有一件商品被消费
         synchronized (storeHouse) {
             Product product = storeHouse.remove();
 
@@ -53,6 +54,7 @@ public class Consumer extends Thread{
         while (true) {
 
             synchronized (storeHouse) {
+                //轮询查询
                 while (storeHouse.isEmpty()) {
                     try {
                         storeHouse.wait();

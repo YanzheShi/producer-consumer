@@ -1,4 +1,4 @@
-package com.github.yanzheshi.demo5;
+package com.github.yanzheshi.demo6;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

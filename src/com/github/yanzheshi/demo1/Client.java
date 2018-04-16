@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Client {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        //公用一个仓库
+        //共用用一个仓库
         int proNum,  conNum, storeSize;
 
         System.out.println("仓库容量");

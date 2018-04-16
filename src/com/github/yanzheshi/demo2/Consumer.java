@@ -48,7 +48,6 @@ public class Consumer extends Thread{
     @Override
     public void run() {
         while (true) {
-
             synchronized (storeHouse) {
                 while (storeHouse.isEmpty()) {
                     try {

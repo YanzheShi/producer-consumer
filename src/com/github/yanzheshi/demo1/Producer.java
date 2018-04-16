@@ -44,7 +44,7 @@ public class Producer extends Thread{
         //同时方便观察线程切换
         try {
             System.out.println(name  + "sleep");
-            sleep(100);
+            sleep(1000);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -56,14 +56,13 @@ public class Producer extends Thread{
                 System.out.println(name + "生产了编号为'" + id + "'的商品");
                 System.out.println("仓库剩余: " + storeHouse.getCount());
                 number++;
-
+                //生产100个商品，让程序自动停止
                 if (number == 100) {
                     System.exit(0);
                 }
             } else {
                 System.out.println("仓库已满!");
             }
-
         }
 
     }

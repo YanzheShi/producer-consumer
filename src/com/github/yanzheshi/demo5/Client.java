@@ -6,7 +6,13 @@ import java.util.concurrent.Executors;
 
 /**
  * 生产者消费者模拟
- * 与test4相比, 自己实现了BlockingQueue
+ * 与test4相比, 自己实现了BlockingQueue，
+ * 使用新的并发框架来实现
+ * Lock，Condition机制
+ * Condition提供了更细粒度的唤醒和等待。
+ * 唤醒指定条件下等待的线程。
+ *
+ * 输出由仓库完成
  * 解决了生产和消费执行后不能立即打印信息的问题
  * Created by shiyanzhe on 2016/11/21.
  */

@@ -47,9 +47,9 @@ public class Producer extends Thread {
             e.printStackTrace();
         }
 
-        if (number == 100) {
+/*        if (number == 100) {
             System.exit(0);
-        }
+        }*/
 
     }
 

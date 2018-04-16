@@ -1,9 +1,11 @@
-package com.github.yanzheshi.demo3;
+package com.github.yanzheshi.demo6;
 
 /**
  * 生产者类
  * 生产过程:
- * 当仓库不满就生产
+ * 检查仓库是否满,当仓库满的时候,线程等待(同步),
+ * 生产(同一时刻只允许一个生产者生产 同步)
+ * <p>
  * Created by shiyanzhe on 2016/11/21.
  */
 public class Producer extends Thread {
@@ -35,46 +37,31 @@ public class Producer extends Thread {
 
         Product newProduct = new Product();
 
-        String id = name + "_" + number;
+        String id = name + "_" + number++;
         newProduct.setId(id);
 
+        //同一时刻只能有一件商品入库
         try {
-            System.out.println(name + "sleep");
-            sleep(100);
-
+            storeHouse.add(newProduct);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        //同一时刻只能有一件商品入库
-
-        if (storeHouse.add(newProduct) == true) {
-            System.out.println(name + "生产了编号为'" + id + "'的商品");
-            System.out.println("仓库剩余: " + storeHouse.getCount());
-            number++;
-
-            if (number == 100) {
-                System.exit(0);
-            }
-        } else {
-            System.out.println("仓库已满!");
-        }
-
+/*        if (number == 100) {
+            System.exit(0);
+        }*/
 
     }
+
     /**
      * 生产线程
-     * 需要检测仓库,当仓库不满的时候,就开始生产
+     * 需要检测仓库,当仓库满的时候,线程等待
      */
     @Override
     public void run() {
 
         while (true) {
-            synchronized (storeHouse) {
-                if (!storeHouse.isFull()) {
-                    produce();
-                }
-            }
+            produce();
         }
     }
 }
